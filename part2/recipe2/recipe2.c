@@ -27,4 +27,4 @@ module_exit(hello_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Kwang Hyuk Ko");
-MODULE_DESCRIPTION("This is a simple init/exit module test");
+MODULE_DESCRIPTION("This is a simple init/exit parameter module test");
