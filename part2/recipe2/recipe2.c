@@ -1,5 +1,5 @@
 /*
- * my_first_module.c
+ * recipe2.c
  *
  *  Created on: 2023. 12. 18.
  *      Author: k2h
