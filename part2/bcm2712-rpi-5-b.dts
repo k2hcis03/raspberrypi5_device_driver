@@ -87,6 +87,30 @@
 		compatible = "brcm,recipe7";
 		status = "okay";
 	};
+
+	recipe8 {  
+		compatible = "brcm,recipe8";
+		status = "okay";
+		pinctrl-0 = <&recipe8>;
+
+		red{
+			lable = "led";
+			colour = "red";
+			default-state = "off";
+			gpios = <&rp1_gpio 17 GPIO_ACTIVE_LOW>;
+		};
+		green{
+			lable = "led";
+			colour = "green";
+			default-state = "off";
+			gpios = <&rp1_gpio 27 GPIO_ACTIVE_LOW>;
+		};
+		blue{
+			lable = "led";
+			colour = "blue";
+			gpios = <&rp1_gpio 22 GPIO_ACTIVE_LOW>;
+		};
+	};
 	sd_io_1v8_reg: sd_io_1v8_reg {
 		compatible = "regulator-gpio";
 		regulator-name = "vdd-sd-io";
