@@ -33,21 +33,22 @@ def main():
         dev = os.open("/dev/recipedev", os.O_RDWR)
         _ioctl = IOCTLRequest()
         data = StructFMT(1, 1, 1)
-        # data1 = bytes(data)
         SET_DATA = _ioctl._IOW(IOCTL_MAGIC, 2, ctypes.sizeof(data))
-        # print(SET_DATA, " ", ctypes.sizeof(data))
         fcntl.ioctl(dev,SET_DATA,data)
         time.sleep(1)
-        data = StructFMT(0, 0, 0)
-        # data1 = bytes(data)
-        SET_DATA = _ioctl._IOW(IOCTL_MAGIC, 2, ctypes.sizeof(data))
-        # print(SET_DATA, " ", ctypes.sizeof(data))
-        fcntl.ioctl(dev,SET_DATA,data)
-        time.sleep(1)
+        
         GET_DATA = _ioctl._IOR(IOCTL_MAGIC, 3, ctypes.sizeof(data))
         fcntl.ioctl(dev,GET_DATA,data)
-        print("GET_DATA ledred = {}, ledgreen = {}, ledblue = {}".format(data.led_red, 
-        data.led_green, data.led_blue))
+        print(f"GET_DATA ledred = {data.led_red}, ledgreen = {data.led_green}, ledblue = {data.led_blue}")
+        
+        data = StructFMT(0, 0, 0)
+        SET_DATA = _ioctl._IOW(IOCTL_MAGIC, 2, ctypes.sizeof(data))
+        fcntl.ioctl(dev,SET_DATA,data)
+        time.sleep(1)
+        
+        GET_DATA = _ioctl._IOR(IOCTL_MAGIC, 3, ctypes.sizeof(data))
+        fcntl.ioctl(dev,GET_DATA,data)
+        print(f"GET_DATA ledred = {data.led_red}, ledgreen = {data.led_green}, ledblue = {data.led_blue}")
         os.close(dev)
     except OSError as e:
         print(e.errno, "Fail to open device file: /dev/recipedev.")
