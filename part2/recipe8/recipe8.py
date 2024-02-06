@@ -4,7 +4,6 @@ import os
 import ctypes
 import struct
 # Initialize the ioctl constants
-from ioctl import IOCTL
 
 class StructFMT(ctypes.Structure):  
     _pack_ = 1  
