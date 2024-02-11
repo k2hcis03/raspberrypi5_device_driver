@@ -941,7 +941,7 @@
 
 			recipe8: recipe8 {
 				function = "gpio";
-				pins = "gpio22", "gpio24", "gpio27";
+				pins = "gpio17", "gpio27", "gpio22";
 			};
 
 			recipe9: recipe9 {
