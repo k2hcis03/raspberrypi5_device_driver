@@ -91,7 +91,7 @@
 	recipe8 {  
 		compatible = "brcm,recipe8";
 		status = "okay";
-		
+		pinctrl-names= "default";
 		pinctrl-0 = <&recipe8>;
 
 		red{
@@ -105,7 +105,7 @@
 			colour = "green";
 			default-state = "off";
 			gpios = <&rp1_gpio 27 GPIO_ACTIVE_LOW>;
-		};
+		};  
 		blue{
 			lable = "led";
 			colour = "blue";
@@ -119,9 +119,22 @@
 
 		pinctrl-names= "default";
 		pinctrl-0 = <&recipe9>;
-		gpios = <&gpio 5 GPIO_ACTIVE_HIGH>;
+		gpios = <&rp1_gpio 5 GPIO_ACTIVE_HIGH>;
 	};
 
+	recipe10 {  
+		compatible = "brcm,recipe10";
+		status = "okay";
+
+		pinctrl-names= "default";
+		pinctrl-0 = <&recipe10>;
+		gpios = <&rp1_gpio 5 GPIO_ACTIVE_HIGH>;
+	};
+
+	recipe11 {  
+		compatible = "brcm,recipe11";
+		status = "okay";
+	};
 	sd_io_1v8_reg: sd_io_1v8_reg {
 		compatible = "regulator-gpio";
 		regulator-name = "vdd-sd-io";
