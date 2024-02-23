@@ -941,6 +941,8 @@
 
 			recipe8: recipe8 {
 				function = "gpio";
+				drive-strength = <12>;
+				slew-rate = <1>;
 				pins = "gpio17", "gpio27", "gpio22";
 			};
 
@@ -949,6 +951,20 @@
 				pins = "gpio5";
 				bias-pull-up;
 				interrupts = <5 IRQ_TYPE_EDGE_FALLING>;
+			};
+
+			recipe10: recipe10 {
+				function = "gpio";
+				pins = "gpio5";
+				bias-pull-up;
+				interrupts = <5 IRQ_TYPE_EDGE_FALLING>;
+			};
+
+			recipe12: recipe12 {
+				function = "gpio";
+				drive-strength = <12>;
+				slew-rate = <1>;
+				pins = "gpio17";
 			};
 		};
 
@@ -1229,4 +1245,3 @@
 		regulator-always-on;
 	};
 };
-
