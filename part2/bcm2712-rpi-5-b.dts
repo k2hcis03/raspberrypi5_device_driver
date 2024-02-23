@@ -135,6 +135,16 @@
 		compatible = "brcm,recipe11";
 		status = "okay";
 	};
+
+	recipe12 {  
+		compatible = "brcm,recipe12";
+		status = "okay";
+
+		pinctrl-names= "default";
+		pinctrl-0 = <&recipe12>;
+		gpios = <&rp1_gpio 17 GPIO_ACTIVE_HIGH>;
+	};
+
 	sd_io_1v8_reg: sd_io_1v8_reg {
 		compatible = "regulator-gpio";
 		regulator-name = "vdd-sd-io";
