@@ -129,31 +129,31 @@ static int recipe_probe(struct platform_device *pdev)
 	dev_info(dev, "device child node count is %d\n", count);
 
 	for_each_child_of_node(dev->of_node, child){
-		const char *label_name, *colour_name;
+		const char *label_name, *color_name;
 
 		of_property_read_string(child, "label", &label_name);
 
 		if (!strcmp(label_name,"led")) {
-			of_property_read_string(child, "colour", &colour_name);
+			of_property_read_string(child, "color", &color_name);
 			dev_info(dev, "led label is %s", label_name);
-			if(!strcmp(colour_name, "red")){
-				dev_info(dev, "led colour is %s", colour_name);
+			if(!strcmp(color_name, "red")){
+				dev_info(dev, "led color is %s", color_name);
 				recipe_private->led_red = devm_gpiod_get_from_of_node(dev, child,
 						"gpios", 0, GPIOD_ASIS, label_name);
 				if (IS_ERR(recipe_private->led_red)) {
 					ret = PTR_ERR(recipe_private->led_red);
 					return ret;
 				}
-			}else if(!strcmp(colour_name, "green")){
-				dev_info(dev, "led colour is %s", colour_name);
+			}else if(!strcmp(color_name, "green")){
+				dev_info(dev, "led color is %s", color_name);
 				recipe_private->led_green = devm_gpiod_get_from_of_node(dev, child,
 						"gpios", 0, GPIOD_ASIS, label_name);
 				if (IS_ERR(recipe_private->led_green)) {
 					ret = PTR_ERR(recipe_private->led_green);
 					return ret;
 				}
-			}else if(!strcmp(colour_name, "blue")){
-				dev_info(dev, "led colour is %s", colour_name);
+			}else if(!strcmp(color_name, "blue")){
+				dev_info(dev, "led color is %s", color_name);
 				recipe_private->led_blue = devm_gpiod_get_from_of_node(dev, child,
 						"gpios", 0, GPIOD_ASIS, label_name);
 				if (IS_ERR(recipe_private->led_blue)) {
@@ -219,4 +219,3 @@ module_platform_driver(recipe_platform_driver);
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Kwang Hyuk Ko");
 MODULE_DESCRIPTION("This is a platform & gpio module ");
-
