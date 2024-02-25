@@ -95,20 +95,20 @@
 		pinctrl-0 = <&recipe8>;
 
 		red{
-			lable = "led";
-			colour = "red";
+			label = "led";
+			color = "red";
 			default-state = "off";
 			gpios = <&rp1_gpio 17 GPIO_ACTIVE_LOW>;
 		};
 		green{
-			lable = "led";
-			colour = "green";
+			label = "led";
+			color = "green";
 			default-state = "off";
 			gpios = <&rp1_gpio 27 GPIO_ACTIVE_LOW>;
 		};  
 		blue{
-			lable = "led";
-			colour = "blue";
+			label = "led";
+			color = "blue";
 			gpios = <&rp1_gpio 22 GPIO_ACTIVE_LOW>;
 		};
 	};
