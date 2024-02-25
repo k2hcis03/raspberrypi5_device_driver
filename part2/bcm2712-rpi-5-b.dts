@@ -93,7 +93,7 @@
 		status = "okay";
 		pinctrl-names= "default";
 		pinctrl-0 = <&recipe8>;
-
+		
 		red{
 			label = "led";
 			color = "red";
@@ -143,6 +143,15 @@
 
 		pinctrl-names= "default";
 		pinctrl-0 = <&recipe12>;
+		gpios = <&rp1_gpio 17 GPIO_ACTIVE_HIGH>;
+	};
+
+	recipe13 {  
+		compatible = "brcm,recipe13";
+		status = "okay";
+
+		pinctrl-names= "default";
+		pinctrl-0 = <&recipe13>;
 		gpios = <&rp1_gpio 17 GPIO_ACTIVE_HIGH>;
 	};
 
