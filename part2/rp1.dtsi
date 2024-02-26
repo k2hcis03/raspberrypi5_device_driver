@@ -973,6 +973,13 @@
 				slew-rate = <1>;
 				pins = "gpio17";
 			};
+
+			recipe14: recipe14 {
+				function = "gpio";
+				drive-strength = <12>;
+				slew-rate = <1>;
+				pins = "gpio17";
+			};
 		};
 
 		rp1_eth: ethernet@100000 {
