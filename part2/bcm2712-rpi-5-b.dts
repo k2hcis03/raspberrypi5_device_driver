@@ -164,6 +164,16 @@
 		gpios = <&rp1_gpio 17 GPIO_ACTIVE_HIGH>;
 	};
 
+	recipe15 {  
+		compatible = "brcm,recipe15";
+		status = "okay";
+	};
+
+	recipe16 {  
+		compatible = "brcm,recipe16";
+		status = "okay";
+	};
+
 	sd_io_1v8_reg: sd_io_1v8_reg {
 		compatible = "regulator-gpio";
 		regulator-name = "vdd-sd-io";
