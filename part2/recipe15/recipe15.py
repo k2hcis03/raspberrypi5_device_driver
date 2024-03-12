@@ -3,15 +3,15 @@ import fcntl
 import os
 import signal
 
+SIGNUM = 50
+
 def handler(signo, frame):
     print("signumber :", signo)
 
 def main():
     data = bytearray([1,2,3])
-    signal.signal(signal.SIGIO, handler)
+    signal.signal(SIGNUM, handler)
     dev = os.open('/dev/recipedev', os.O_RDWR)
-    fcntl.fcntl(dev, fcntl.F_SETOWN, os.getpid())
-    fcntl.fcntl(dev, fcntl.F_SETFL, fcntl.fcntl(dev, fcntl.F_GETFL)|fcntl.FASYNC)
 
     while True:
         os.write(dev, data)
