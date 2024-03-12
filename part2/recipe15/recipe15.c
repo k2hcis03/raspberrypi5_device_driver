@@ -21,17 +21,18 @@
 
 #include <linux/hrtimer.h>
 #include <linux/ktime.h>
-
 #include <linux/sysfs.h>
+#include <linux/sched/signal.h>
 
 #define DEVICE_NAME 		"recipedev"
-#define MS_TO_NS(x) 		(x * 1000000L)
+#define US_TO_NS(x) 		(x * 1000L)
+#define	SIGNUM				50
 
 struct recipe15{
 	struct platform_device *pdev;
 	struct miscdevice recipe_miscdevice;
-	struct fasync_struct *async_queue; /* asynchronous readers */
 };
+static struct task_struct *task = NULL;
 
 static int recipe_open(struct inode *inode, struct file *file)
 {
@@ -49,7 +50,9 @@ static int recipe_close(struct inode *inode, struct file *file)
 	struct device *dev;
 	recipe_private = container_of(file->private_data, struct recipe15, recipe_miscdevice);
 	dev = &recipe_private->pdev->dev;
-
+	if (task != NULL){
+		task = NULL;
+	}
 	dev_info(dev, "recipe_dev_close() is called.\n");
 	return 0;
 }
@@ -60,11 +63,12 @@ static ssize_t recipe_write(struct file *filp, const char __user *buff, size_t c
 	struct device *dev;
 	char buffer[100];
 	int i;
+	struct siginfo info;
 
 	recipe_private = container_of(filp->private_data, struct recipe15, recipe_miscdevice);
 	dev = &recipe_private->pdev->dev;
-
-	dev_info(dev, "recipe_write() is called.\n");
+	task = get_current();
+	dev_info(dev, "recipe_write() is called. and task pid is %d \n", task->pid);
 
 	if(copy_from_user(&buffer, buff, count)) {
 		dev_info(dev, "Bad copied value\n");
@@ -73,20 +77,16 @@ static ssize_t recipe_write(struct file *filp, const char __user *buff, size_t c
 	for(i = 0; i < count; i++){
 		dev_info(dev, "user data is %d\n", buffer[i]);
 	}
-	if (recipe_private->async_queue)
-		kill_fasync(&recipe_private->async_queue, SIGIO, POLL_OUT);
+	
+	memset(&info, 0, sizeof(info));
+	info.si_signo = SIGNUM;
+	info.si_code = SI_QUEUE;
+
+	if (send_sig_info(SIGNUM, (struct kernel_siginfo *) &info, task) < 0){
+		dev_info(dev, "Error sending signal");
+	}
+	
 	return count;
-}
-
-static int recipe_fasync(int fd, struct file *file, int mode)
-{
-	struct recipe15 * recipe_private;
-	struct device *dev;
-	recipe_private = container_of(file->private_data, struct recipe15, recipe_miscdevice);
-	dev = &recipe_private->pdev->dev;
-
-	dev_info(dev, "recipe_fasync() is called.\n");
-	return fasync_helper(fd, file, mode, &recipe_private->async_queue);
 }
 
 static const struct file_operations recipe_fops = {
@@ -95,7 +95,6 @@ static const struct file_operations recipe_fops = {
 //	.read = recipe_read,
 //	.unlocked_ioctl = recipe_ioctl,
 	.write = recipe_write,
-	.fasync = recipe_fasync,
 	.release = recipe_close,
 };
 
