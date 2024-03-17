@@ -1,0 +1,21 @@
+/dts-v1/;  
+/plugin/;  
+
+/ {
+    compatible = "brcm,bcm2835";
+
+    fragment@0 {
+        target = <&i2c1>;
+        __overlay__ {
+            #address-cells = <1>;
+            #size-cells = <0>;
+
+            recipe19: MCP4725@60 {
+                compatible = "brcm,recipe19";
+                clock-frequency = <400000>;
+                reg = <0x60>;
+                status = "okay";
+            };
+        };
+    };
+};
