@@ -1,0 +1,40 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+	compatible = "brcm,bcm2712";
+
+	fragment@0 {
+		target = <&rp1_gpio>;
+		__overlay__ {
+			pwm_pins: pwm_pins {
+				pins = "gpio12", "gpio13", "gpio18", "gpio19";
+				function = "pwm0","pwm0", "pwm0","pwm0";
+			};
+		};
+	};
+
+	fragment@1 {
+		target = <&rp1_pwm0>;
+		__overlay__ {
+			pinctrl-names = "default";
+			pinctrl-0 = <&pwm_pins>;
+			//assigned-clock-rates = <30720000>;
+			status = "okay";
+		};
+	};
+	
+	fragment@2 {  
+		target-path = "/";
+		__overlay__ {
+			recipe20 {
+				compatible = "brcm,recipe20"; 		  		  
+				status = "okay";
+				// PWM on PWM0.0 on GPIO19
+				pwms = <&rp1_pwm0 3 1000000 0>;   
+				pwm-names = "recipe20-pwm";
+				linux,default-trigger = "default-on";
+			};
+		};
+	};
+};
